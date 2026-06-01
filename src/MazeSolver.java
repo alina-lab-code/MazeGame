@@ -1,4 +1,10 @@
-class MazeSolver {
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+public class MazeSolver {
     public static List<Point> findPath(boolean[][] walls, int width, int height) {
         List<Point> path = new ArrayList<>();
         // Проверка: свободны ли старт (0,0) и финиш (W-1, H-1)
