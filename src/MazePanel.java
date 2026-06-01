@@ -1,6 +1,9 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
-
-    class MazePanel extends JPanel {
+public class MazePanel extends JPanel {
         private final int width;
         private final int height;
         private final boolean[][] walls;
@@ -92,4 +95,4 @@
             }
         }
     }
-}
+

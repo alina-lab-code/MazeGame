@@ -1,5 +1,5 @@
 
-    class RenderConfig {
+   class RenderConfig {
         public String wallCellColor;
         public String pathColor;
         public boolean drawGrid;
@@ -25,5 +25,5 @@
             return json.substring(start, end).trim().replace("\"", "");
         }
     }
-}
-}
+
+

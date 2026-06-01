@@ -1,5 +1,8 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
-    public class MazeApp extends JFrame {
+public class MazeApp extends JFrame {
         private static final String BASE_URL = "https://backend-qcf9.onrender.com/fm1";
 
         private RenderConfig config;
@@ -178,4 +181,4 @@
             SwingUtilities.invokeLater(() -> new MazeApp().setVisible(true));
         }
     }
-}
+

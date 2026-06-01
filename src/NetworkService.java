@@ -1,5 +1,11 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-    class NetworkService {
+public class NetworkService {
 
         // Вспомогательный метод для подстановки заголовков авторизации
         private static HttpURLConnection prepareConnection(String urlStr, String apiKey) throws Exception {
@@ -45,4 +51,4 @@
             return ImageIO.read(conn.getInputStream());
         }
     }
-}
+
