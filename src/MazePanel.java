@@ -1,4 +1,4 @@
-public class MazePanel {
+
 
     class MazePanel extends JPanel {
         private final int width;

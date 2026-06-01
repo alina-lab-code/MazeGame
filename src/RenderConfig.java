@@ -1,4 +1,3 @@
-public class RenderConfig {
 
     class RenderConfig {
         public String wallCellColor;

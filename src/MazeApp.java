@@ -1,5 +1,4 @@
 
-
     public class MazeApp extends JFrame {
         private static final String BASE_URL = "https://backend-qcf9.onrender.com/fm1";
 
