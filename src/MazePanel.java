@@ -10,8 +10,8 @@ public class MazePanel extends JPanel {
     private final boolean[][] walls;
     private final RenderConfig config;
 
-    private final int cellSize = 15; // Размер одного квадрата в окне Swing
-    private List<Point> solutionPath = new ArrayList<>(); // Теперь здесь всё отлично
+    private final int cellSize = 15;
+    private List<Point> solutionPath = new ArrayList<>();
     private int animationIndex = -1;
     private javax.swing.Timer animationTimer;
 
@@ -21,7 +21,7 @@ public class MazePanel extends JPanel {
         this.height = img.getHeight();
         this.walls = new boolean[width][height];
 
-        // Анализ пикселей исходного изображения
+
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 int rgb = img.getRGB(x, y);
@@ -29,7 +29,7 @@ public class MazePanel extends JPanel {
                 int g = (rgb >> 8) & 0xFF;
                 int b = rgb & 0xFF;
 
-                // Если пиксель абсолютно белый — это проход, иначе — стена
+
                 walls[x][y] = !(r == 255 && g == 255 && b == 255);
             }
         }
@@ -40,11 +40,11 @@ public class MazePanel extends JPanel {
         solutionPath = MazeSolver.findPath(walls, width, height);
 
         if (solutionPath.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Путь от верхнего левого угла к нижнему правому не существует!", "Нет решения", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Path from high left corner to right low corner does nor exist!", "Solution does not exist!", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Запуск пошаговой анимации
+
         animationIndex = 0;
         if (animationTimer != null && animationTimer.isRunning()) {
             animationTimer.stop();
@@ -70,7 +70,7 @@ public class MazePanel extends JPanel {
         Color pathColor = Color.decode(config.pathColor);
         Color gridColor = Color.decode(config.gridColor);
 
-        // Отрисовка структуры сетки
+
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (walls[x][y]) {
@@ -87,7 +87,7 @@ public class MazePanel extends JPanel {
             }
         }
 
-        // Отрисовка анимированных шагов решения
+
         if (animationIndex >= 0) {
             g2d.setColor(pathColor);
             for (int i = 0; i < animationIndex; i++) {

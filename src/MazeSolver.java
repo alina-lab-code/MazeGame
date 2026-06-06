@@ -7,7 +7,7 @@ import java.util.Queue;
 public class MazeSolver {
     public static List<Point> findPath(boolean[][] walls, int width, int height) {
         List<Point> path = new ArrayList<>();
-        // Проверка: свободны ли старт (0,0) и финиш (W-1, H-1)
+
         if (walls[0][0] || walls[width - 1][height - 1]) return path;
 
         Queue<Point> queue = new LinkedList<>();
@@ -20,7 +20,7 @@ public class MazeSolver {
         queue.add(start);
         visited[0][0] = true;
 
-        // Векторы направлений (вправо, влево, вниз, вверх)
+
         int[] dx = {1, -1, 0, 0};
         int[] dy = {0, 0, 1, -1};
 
@@ -47,7 +47,7 @@ public class MazeSolver {
             }
         }
 
-        // Восстановление цепочки шагов обратно от финиша к старту
+
         if (pathFound) {
             Point curr = end;
             while (curr != null) {

@@ -7,16 +7,16 @@ import java.net.URL;
 
 public class NetworkService {
 
-        // Вспомогательный метод для подстановки заголовков авторизации
+
         private static HttpURLConnection prepareConnection(String urlStr, String apiKey) throws Exception {
             URL url = new URL(urlStr);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
-            // Передаем токен в стандартном формате Bearer
+
             conn.setRequestProperty("Authorization", "Bearer " + apiKey);
 
-            // На случай, если твой бэкенд ждет ключ в кастомном заголовке, раскомментируй строку ниже:
+
             // conn.setRequestProperty("X-API-Key", apiKey);
 
             return conn;
