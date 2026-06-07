@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,14 +22,12 @@ public class MazePanel extends JPanel {
         this.height = img.getHeight();
         this.walls = new boolean[width][height];
 
-
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 int rgb = img.getRGB(x, y);
                 int r = (rgb >> 16) & 0xFF;
                 int g = (rgb >> 8) & 0xFF;
                 int b = rgb & 0xFF;
-
 
                 walls[x][y] = !(r == 255 && g == 255 && b == 255);
             }
@@ -40,10 +39,9 @@ public class MazePanel extends JPanel {
         solutionPath = MazeSolver.findPath(walls, width, height);
 
         if (solutionPath.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Path from high left corner to right low corner does nor exist!", "Solution does not exist!", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Путь не существует!", "Нет решения", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
 
         animationIndex = 0;
         if (animationTimer != null && animationTimer.isRunning()) {
@@ -70,7 +68,7 @@ public class MazePanel extends JPanel {
         Color pathColor = Color.decode(config.pathColor);
         Color gridColor = Color.decode(config.gridColor);
 
-
+        // Отрисовка структуры сетки и стен
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (walls[x][y]) {
@@ -78,8 +76,10 @@ public class MazePanel extends JPanel {
                 } else {
                     g2d.setColor(Color.WHITE);
                 }
+
                 g2d.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
 
+                // Рисуем сетку только если флажок в главном окне был активен
                 if (config.drawGrid) {
                     g2d.setColor(gridColor);
                     g2d.drawRect(x * cellSize, y * cellSize, cellSize, cellSize);
@@ -87,12 +87,17 @@ public class MazePanel extends JPanel {
             }
         }
 
-
+        // Отрисовка анимированных шагов решения выбранным цветом пути
         if (animationIndex >= 0) {
             g2d.setColor(pathColor);
             for (int i = 0; i < animationIndex; i++) {
                 Point p = solutionPath.get(i);
-                g2d.fillRect(p.x * cellSize + 2, p.y * cellSize + 2, cellSize - 4, cellSize - 4);
+                // Если сетки нет, делаем линию пути чуть шире для красоты
+                if (config.drawGrid) {
+                    g2d.fillRect(p.x * cellSize + 2, p.y * cellSize + 2, cellSize - 4, cellSize - 4);
+                } else {
+                    g2d.fillRect(p.x * cellSize, p.y * cellSize, cellSize, cellSize);
+                }
             }
         }
     }
