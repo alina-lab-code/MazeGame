@@ -7,66 +7,66 @@ public class MazeApp extends JFrame {
 
     private RenderConfig config;
 
-    // Элементы управления UI
+
     private JTextField apiKeyField;
     private JTextField widthField;
     private JTextField heightField;
 
-    // Новые интерактивные элементы вместо обычных надписей
+
     private JComboBox<String> wallColorCombo;
     private JComboBox<String> pathColorCombo;
     private JCheckBox drawGridCheck;
-    private JTextField delayField; // Задержку тоже сделаем изменяемой
+    private JTextField delayField;
 
-    // Массивы понятных названий цветов и их HEX-кодов
-    private final String[] colorNames = {"Черный", "Красный", "Синий", "Зеленый", "Серый", "Оранжевый"};
+
+    private final String[] colorNames = {"Black", " Red", "Blue", "Green", "Gray", "Orange"};
     private final String[] colorHexes = {"#000000", "#FF0000", "#0000FF", "#00FF00", "#808080", "#FFA500"};
 
     public MazeApp() {
-        setTitle("Настройки лабиринта");
+        setTitle("Maze Settings");
         setSize(450, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(9, 2, 10, 10));
 
-        // 1. Поле для ввода API-ключа
-        add(new JLabel(" Ваш API-Ключ:"));
+
+        add(new JLabel(" Your API key:"));
         apiKeyField = new JTextField("0GmBa3FvOFCRTkd6WO30vHJLy2nMPRd6qWjEx0Sp0yU68PKw74DTtjJZeyJuvw5Z");
         add(apiKeyField);
 
-        // 2. Размеры лабиринта
-        add(new JLabel(" Ширина (5-100):"));
+
+        add(new JLabel(" Width (5-100):"));
         widthField = new JTextField("30");
         add(widthField);
 
-        add(new JLabel(" Высота (5-100):"));
+        add(new JLabel(" Height(5-100):"));
         heightField = new JTextField("30");
         add(heightField);
 
-        // 3. Интерактивные настройки графики
-        add(new JLabel(" Цвет стен лабиринта:"));
+
+        add(new JLabel(" Wall color:"));
         wallColorCombo = new JComboBox<>(colorNames);
         add(wallColorCombo);
 
-        add(new JLabel(" Цвет пути решения:"));
+        add(new JLabel(" Path color:"));
         pathColorCombo = new JComboBox<>(colorNames);
-        pathColorCombo.setSelectedIndex(3); // По умолчанию зеленый
+        pathColorCombo.setSelectedIndex(3);
         add(pathColorCombo);
 
-        add(new JLabel(" Отображать сетку:"));
-        drawGridCheck = new JCheckBox("Включить сетку", true);
+        add(new JLabel(" View grid:"));
+        drawGridCheck = new JCheckBox("Enable grid", true);
         add(drawGridCheck);
 
-        add(new JLabel(" Задержка анимации (мс):"));
+        add(new JLabel(" Animation speed (ms):"));
         delayField = new JTextField("80");
         add(delayField);
 
-        // 4. Кнопки управления
-        JButton refreshBtn = new JButton("Загрузить дефолт сервера");
+
+        JButton refreshBtn = new JButton(" Load default server");
         refreshBtn.addActionListener(e -> loadConfigFromServer());
         add(refreshBtn);
 
-        JButton getMazeBtn = new JButton("ПОЛУЧИТЬ ЛАБИРИНТ");
+        JButton getMazeBtn = new JButton("GET MAZE");
         getMazeBtn.addActionListener(e -> downloadAndShowMaze());
         add(getMazeBtn);
     }
@@ -75,15 +75,15 @@ public class MazeApp extends JFrame {
         return apiKeyField.getText().trim();
     }
 
-    // Хелпер для поиска индекса HEX-цвета в нашем массиве
+
     private int getColorIndex(String hex) {
         for (int i = 0; i < colorHexes.length; i++) {
             if (colorHexes[i].equalsIgnoreCase(hex)) return i;
         }
-        return 0; // Если не нашли, вернем первый (черный)
+        return 0;
     }
 
-    // Загрузка дефолтных настроек с сервера (если хочется посмотреть, что там зашито)
+
     private void loadConfigFromServer() {
         String currentKey = getEnteredApiKey();
         if (currentKey.isEmpty()) {
