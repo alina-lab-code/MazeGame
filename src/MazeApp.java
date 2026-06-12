@@ -19,7 +19,7 @@ public class MazeApp extends JFrame {
     private JTextField delayField;
 
 
-    private final String[] colorNames = {"Black", " Red", "Blue", "Green", "Gray", "Orange"};
+    private final String[] colorNames = {"Black", "Red", "Blue", "Green", "Gray", "Orange"};
     private final String[] colorHexes = {"#000000", "#FF0000", "#0000FF", "#00FF00", "#808080", "#FFA500"};
 
     public MazeApp() {
@@ -57,7 +57,7 @@ public class MazeApp extends JFrame {
         drawGridCheck = new JCheckBox("Enable grid", true);
         add(drawGridCheck);
 
-        add(new JLabel(" Animation speed (ms):"));
+        add(new JLabel(" Animation delay (ms):"));
         delayField = new JTextField("80");
         add(delayField);
 
@@ -87,7 +87,7 @@ public class MazeApp extends JFrame {
     private void loadConfigFromServer() {
         String currentKey = getEnteredApiKey();
         if (currentKey.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Пожалуйста, сначала введите API-ключ!", "Внимание", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter API key first!", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -102,14 +102,14 @@ public class MazeApp extends JFrame {
             protected void done() {
                 try {
                     config = get();
-                    // Выставляем в UI то, что прислал сервер
+
                     wallColorCombo.setSelectedIndex(getColorIndex(config.wallCellColor));
                     pathColorCombo.setSelectedIndex(getColorIndex(config.pathColor));
                     drawGridCheck.setSelected(config.drawGrid);
                     delayField.setText(String.valueOf(config.animationDelayMs));
-                    JOptionPane.showMessageDialog(MazeApp.this, "Конфигурация сервера успешно синхронизирована!");
+                    JOptionPane.showMessageDialog(MazeApp.this, "Server configuration synchronized!");
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(MazeApp.this, "Ошибка сервера: " + e.getMessage(), "Ошибка API", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(MazeApp.this, "Server error: " + e.getMessage(), "API error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -119,7 +119,7 @@ public class MazeApp extends JFrame {
     private void downloadAndShowMaze() {
         String currentKey = getEnteredApiKey();
         if (currentKey.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Введите API-ключ перед получением лабиринта!");
+            JOptionPane.showMessageDialog(this, "Enter API key before getting maze!");
             return;
         }
 
@@ -150,14 +150,14 @@ public class MazeApp extends JFrame {
             protected void done() {
                 try {
                     BufferedImage image = get();
-                    if (image == null) throw new Exception("Неверный формат ответа от сервера");
+                    if (image == null) throw new Exception("Wrong response format from server");
 
-                    // Создаем объект конфигурации прямо из того, что выбрано пользователем в окне!
+
                     RenderConfig customConfig = new RenderConfig();
                     customConfig.wallCellColor = colorHexes[wallColorCombo.getSelectedIndex()];
                     customConfig.pathColor = colorHexes[pathColorCombo.getSelectedIndex()];
                     customConfig.drawGrid = drawGridCheck.isSelected();
-                    customConfig.gridColor = "#CCCCCC"; // Светло-серый цвет для сетки
+                    customConfig.gridColor = "#CCCCCC";
 
                     try {
                         customConfig.animationDelayMs = Integer.parseInt(delayField.getText().trim());
@@ -168,7 +168,7 @@ public class MazeApp extends JFrame {
                     openMazeWindow(image, customConfig);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(MazeApp.this,
-                            "Не удалось получить лабиринт: " + e.getMessage(), "Ошибка запроса", JOptionPane.ERROR_MESSAGE);
+                            "Can not get maze, sorry: " + e.getMessage(), "Request error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -188,7 +188,7 @@ public class MazeApp extends JFrame {
         mazeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         MazePanel mazePanel = new MazePanel(img, customConfig);
-        JButton solveBtn = new JButton("Проверить решение");
+        JButton solveBtn = new JButton("Check solution");
         solveBtn.addActionListener(e -> mazePanel.startSolving());
 
         mazeFrame.add(mazePanel, BorderLayout.CENTER);
